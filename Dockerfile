@@ -56,7 +56,8 @@ AddDefaultCharset Off' >> /etc/apache2/conf.d/smokeping.conf
 ADD config /etc/smokeping/config
 
 RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
-/bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}"
+/bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" && \
+/bin/bash -c "rm -rf /etc/smokeping/examples"
 
 ADD supervisord.conf /etc/supervisord.conf
 
