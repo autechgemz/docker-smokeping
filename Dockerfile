@@ -60,6 +60,8 @@ RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
 
 ADD supervisord.conf /etc/supervisord.conf
 
+VOLUME ["/var/lib/smokeping"]
+
 EXPOSE 80
 
 ENTRYPOINT ["/usr/bin/supervisord","-n","-c","/etc/supervisord.conf"]
