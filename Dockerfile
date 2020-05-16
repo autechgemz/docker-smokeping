@@ -1,9 +1,5 @@
 FROM alpine:latest 
 
-MAINTAINER gigabeer@gmail.com
-
-ENV UPDATED_AT 2016-04-19
-
 RUN apk upgrade --update --available && \
 apk add --no-cache \
 bash \
@@ -12,9 +8,10 @@ fping \
 tzdata \
 rsyslog \
 apache2 \
-smokeping
+smokeping \
+ttf-dejavu
 
-RUN cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+RUN cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
 apk del tzdata && \
 rm -rf /var/cache/apk/*
 
@@ -40,18 +37,21 @@ RUN echo $'Alias /cache /var/lib/smokeping/cache\n\
 Alias /data /var/lib/smokeping/data\n\
 Alias /cropper /usr/share/webapps/smokeping/cropper\n\
 Alias /img /usr/share/webapps/smokeping/img\n\
+Alias /js /usr/share/webapps/smokeping/js\n\
+Alias /css /usr/share/webapps/smokeping/css\n\
 ScriptAlias /smokeping.cgi /usr/share/webapps/smokeping/smokeping.cgi\n\
 <Files smokeping.cgi>\n\
   AddHandler cgi-script .cgi\n\
   Options +ExecCGI\n\
   Require all granted\n\
 </Files>\n\
-<DirectoryMatch /usr/share/webapps/smokeping/(cropper|img)>\n\
+<DirectoryMatch /usr/share/webapps/smokeping/(cropper|img|js|css)>\n\
   Require all granted\n\
 </DirectoryMatch>\n\
 <DirectoryMatch /var/lib/smokeping/(cache|data)>\n\
   Require all granted\n\
-</DirectoryMatch>' >> /etc/apache2/conf.d/smokeping.conf
+</DirectoryMatch>\n\
+AddDefaultCharset Off' >> /etc/apache2/conf.d/smokeping.conf
 
 ADD config /etc/smokeping/config
 

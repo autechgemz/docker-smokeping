@@ -1,0 +1,12 @@
+version: "3"
+services:
+  smokeping:
+    build: .
+    image: autechgemz/smokeping
+    container_name: smokeping
+    network_mode: bridge
+    ports:
+      - "80:80"
+    environment:
+      TZ: "Asia/Tokyo"
+    restart: always
