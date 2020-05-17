@@ -8,7 +8,6 @@ bash \
 runit \
 fping \
 tzdata \
-rsyslog \
 apache2 \
 smokeping \
 ttf-dejavu
@@ -22,10 +21,6 @@ export PATH PS1' > /root/.bashrc && \
 echo $'if [ -f ~/.bashrc ]; then\n\
   . ~/.bashrc\n\
 fi' > /root/.bash_profile
-
-RUN sed -i -e '/^$ModLoad imklog.so.*/d' \
--e '/^\*.emerg.*\*/d' \
--e '/^#.*/d' -e '/^$/d' /etc/rsyslog.conf
 
 RUN sed -i -e 's/ServerTokens OS/ServerTokens Prod/' \
 -e 's/ServerSignature On/ServerSignature Off/' \
