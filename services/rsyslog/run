@@ -1,2 +1,3 @@
 #!/usr/bin/env sh
+rm -f /var/run/rsyslogd.pid
 exec /usr/sbin/rsyslogd -n
