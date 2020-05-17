@@ -56,7 +56,7 @@ ScriptAlias /smokeping.cgi /usr/share/webapps/smokeping/smokeping.cgi\n\
 </DirectoryMatch>\n\
 AddDefaultCharset Off' >> /etc/apache2/conf.d/smokeping.conf
 
-ADD config /etc/smokeping/config
+COPY config /etc/smokeping/config
 
 RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
 /bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" && \
@@ -65,7 +65,7 @@ RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
 RUN /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/access.log" && \
 /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/error.log"
 
-ADD services /services
+COPY services /services
 
 RUN chmod +x /services/*/run
 
