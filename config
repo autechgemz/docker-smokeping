@@ -120,3 +120,9 @@ menu= Targets
 menu  = localhost
 title = localhost
 host = 127.0.0.1 
+
+++ gateway
+
+menu = gateway
+title = gateway
+host = 192.168.1.1
