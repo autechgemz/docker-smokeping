@@ -3,7 +3,7 @@ FROM alpine:latest
 RUN apk upgrade --update --available && \
 apk add --no-cache \
 bash \
-supervisor \
+runit \
 fping \
 tzdata \
 rsyslog \
@@ -59,10 +59,12 @@ RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
 /bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" && \
 /bin/bash -c "rm -rf /etc/smokeping/examples"
 
-ADD supervisord.conf /etc/supervisord.conf
+ADD services /services
+
+RUN chmod +x /services/*/run
 
 VOLUME ["/var/lib/smokeping"]
 
 EXPOSE 80
 
-ENTRYPOINT ["/usr/bin/supervisord","-n","-c","/etc/supervisord.conf"]
+ENTRYPOINT ["runsvdir", "-P", "/services"]
