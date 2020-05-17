@@ -2,18 +2,17 @@ FROM alpine:latest
 
 ENV TZ Asia/Tokyo
 
-RUN apk upgrade --update --available && \
-apk add --no-cache \
-bash \
-runit \
-fping \
-tzdata \
-apache2 \
-smokeping \
-ttf-dejavu
-
-RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
-rm -rf /var/cache/apk/*
+RUN apk upgrade --update --available \
+ && apk add --no-cache \
+    bash \
+    runit \
+    fping \
+    tzdata \
+    apache2 \
+    smokeping \
+    ttf-dejavu \
+ && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
+ && rm -rf /var/cache/apk/*
 
 RUN echo $'PS1="[\u@\h \W]# "\n\
 PATH=$PATH:$HOME/bin\n\
@@ -27,9 +26,9 @@ RUN sed -i -e 's/ServerTokens OS/ServerTokens Prod/' \
 -e 's/\#\(LoadModule cgi_module.*\)/\1/' \
 -e 's/\(CustomLog logs\/access\.log combined\)/#\1/' \
 -e 's/\#\(CustomLog logs\/access\.log common\)/\1/' \
--e 's/lib\/apache2\(\/mod_cgi\.so\)/modules\1/' /etc/apache2/httpd.conf && \
-echo 'PidFile /run/apache2/httpd.pid' >> /etc/apache2/httpd.conf && \
-/bin/bash -c "mkdir -p /run/apache2"
+-e 's/lib\/apache2\(\/mod_cgi\.so\)/modules\1/' /etc/apache2/httpd.conf \
+ && echo 'PidFile /run/apache2/httpd.pid' >> /etc/apache2/httpd.conf \
+ && /bin/bash -c "mkdir -p /run/apache2"
 
 RUN echo $'Alias /cache /var/lib/smokeping/cache\n\
 Alias /data /var/lib/smokeping/data\n\
@@ -53,12 +52,11 @@ AddDefaultCharset Off' >> /etc/apache2/conf.d/smokeping.conf
 
 COPY config /etc/smokeping/config
 
-RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" && \
-/bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" && \
-/bin/bash -c "rm -rf /etc/smokeping/examples"
-
-RUN /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/access.log" && \
-/bin/bash -c "ln -snf /dev/stdout /var/log/apache2/error.log"
+RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" \
+ && /bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" \
+ && /bin/bash -c "rm -rf /etc/smokeping/examples" \
+ && /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/access.log" \
+ && /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/error.log"
 
 COPY services /services
 
