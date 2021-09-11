@@ -1,7 +1,8 @@
 {
   "variables": {
     "timezone": "Asia/Tokyo",
-    "image_from": "alpine:latest"
+    "image_from": "alpine:latest",
+    "service_port": "80"
   },
   "builders":[
     {
@@ -13,7 +14,7 @@
       "changes": [
 	"ENV TZ {{user `timezone`}}",
 	"VOLUME /var/lib/smokeping",
-	"EXPOSE 80\/tcp",
+	"EXPOSE {{user `service_port`}}\/tcp",
 	"ENTRYPOINT [ \"runsvdir\", \"-P\", \"\/services\/\" ]"
       ]
     }
