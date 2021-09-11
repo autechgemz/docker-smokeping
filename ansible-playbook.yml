@@ -34,8 +34,8 @@
         src: "apache2/smokeping.conf"
         dest: "/etc/apache2/conf.d/smokeping.conf"
     - name: copy smokeping config
-      copy:
-        src: "smokeping/config"
+      template:
+        src: "smokeping/config.j2"
         dest: "/etc/smokeping/config"
     - name: make smokeping directories
       file:
