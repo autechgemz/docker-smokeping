@@ -25,14 +25,18 @@
         force: yes
   - name: smokeping configurations
     block:
-    - name: copy apache2 configurations
+    - name: copy httpd.conf
       copy:
         src: "apache2/httpd.conf"
         dest: "/etc/apache2/httpd.conf"
-    - name: copy apache2 configurations
+    - name: copy smokeping.conf
       copy:
         src: "apache2/smokeping.conf"
         dest: "/etc/apache2/conf.d/smokeping.conf"
+    - name: copy smokeping config
+      copy:
+        src: "smokeping/config"
+        dest: "/etc/smokeping/config"
     - name: make smokeping directories
       file:
         path: "/var/lib/smokeping/{{ item }}"
