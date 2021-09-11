@@ -42,11 +42,6 @@
       with_items:
         - cache
         - data
-    - name: remove smokeping examples
-      file:
-        path: /etc/smokeping/examples"
-        force: yes
-        state: absent
     - name: make symlink to STDOUT
       file:
         src: "/dev/stdout"
