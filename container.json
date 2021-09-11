@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "timezone": "Asia/Tokyo",
+    "image_from": "alpine:latest"
+  },
+  "builders":[
+    {
+      "type": "docker",
+      "image": "{{user `image_from`}}",
+      "pull": true,
+      "run_command": ["-dit", "{{.Image}}", "/bin/ash"],
+      "commit": true,
+      "changes": [
+	"ENV TZ {{user `timezone`}}",
+	"VOLUME /var/lib/smokeping",
+	"EXPOSE 80\/tcp",
+	"ENTRYPOINT [ \"runsvdir\", \"-P\", \"\/services\/\" ]"
+      ]
+    }
+  ],
+  "provisioners":[
+    {
+      "type": "shell",
+      "inline": [
+        "apk update",
+	"apk upgrade --update --available",
+	"apk add --no-cache ansible python3",
+	"mkdir -p /tmp/ansible-local"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "files/",
+      "destination": "/tmp/ansible-local"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible-playbook.yml",
+      "staging_directory": "/tmp/ansible-local",
+      "extra_arguments": [
+	"-e timezone={{user `timezone`}}",
+	"-e ansible_python_interpreter=/usr/bin/python3"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "apk del --no-cache ansible"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "autechgemz/smokeping",
+      "tags": "latest"
+    }
+  ]
+}

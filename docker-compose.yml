@@ -1,7 +1,6 @@
 version: "3"
 services:
   smokeping:
-    build: .
     image: autechgemz/smokeping
     container_name: smokeping
     network_mode: bridge

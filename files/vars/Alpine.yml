@@ -1,0 +1,13 @@
+---
+timezone: 'Asia/Tokyo'
+
+package_names:
+  - bash
+  - runit
+  - fping
+  - tzdata
+  - apache2
+  - smokeping
+  - ttf-dejavu
+
+package_cleandir: '/var/cache/apk'

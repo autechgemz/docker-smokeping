@@ -1,0 +1,73 @@
+---
+- hosts: all
+  gather_facts: yes
+  vars_files:
+    - "vars/{{ ansible_distribution }}.yml"
+  tasks:
+  - name: general settings
+    block:
+    - name: install packages
+      package:
+        name: "{{ package_names }}"
+        state: present
+    - name: clean directories
+      file:
+        path: "{{ item }}"
+        force: yes
+        state: absent
+      with_items: "{{ package_cleandir }}"
+    - debug: var=timezone
+    - name: change timezone setting
+      file:
+        src: "/usr/share/zoneinfo/{{ timezone }}"
+        dest: /etc/localtime
+        state: link
+        force: yes
+  - name: smokeping configurations
+    block:
+    - name: copy apache2 configurations
+      copy:
+        src: "apache2/httpd.conf"
+        dest: "/etc/apache2/httpd.conf"
+    - name: copy apache2 configurations
+      copy:
+        src: "apache2/smokeping.conf"
+        dest: "/etc/apache2/conf.d/smokeping.conf"
+    - name: make smokeping directories
+      file:
+        path: "/var/lib/smokeping/{{ item }}"
+        owner: apache
+        group: smokeping
+        state: directory
+      with_items:
+        - cache
+        - data
+    - name: remove smokeping examples
+      file:
+        path: /etc/smokeping/examples"
+        force: yes
+        state: absent
+    - name: make symlink to STDOUT
+      file:
+        src: "/dev/stdout"
+        dest: "/var/log/apache2/{{ item }}"
+        state: link
+        follow: no
+      with_items:
+        - "access.log"
+        - "error.log"
+  - name: setup runit configrations
+    block:
+    - name: copy services directories
+      copy:
+        src: "services/"
+        dest: "/services"
+        owner: root
+        group: root
+        mode: 0755
+    - name: set execute attribute
+      file:
+        path: "/services/{{ item }}/run"
+      with_items:
+        - "apache"
+        - "smokeping"
