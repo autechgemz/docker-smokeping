@@ -45,7 +45,7 @@
     {
       "type": "shell",
       "inline": [
-        "apk del --no-cache ansible"
+        "apk del --no-cache ansible python3"
       ]
     }
   ],
