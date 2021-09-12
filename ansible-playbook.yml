@@ -46,15 +46,18 @@
       with_items:
         - cache
         - data
-    - name: make symlink to STDOUT
+    - name: "make symlink to /dev/stdout"
       file:
         src: "/dev/stdout"
-        dest: "/var/log/apache2/{{ item }}"
+        dest: "/var/log/apache2/error.log"
         state: link
         follow: no
-      with_items:
-        - "access.log"
-        - "error.log"
+    - name: "make symlink to /dev/null"
+      file:
+        src: "/dev/null"
+        dest: "/var/log/apache2/access.log"
+        state: link
+        follow: no
   - name: setup runit configrations
     block:
     - name: copy services directories
