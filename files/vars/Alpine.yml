@@ -5,7 +5,9 @@ package_names:
   - runit
   - fping
   - tzdata
-  - apache2
+  - nginx
+  - fcgiwrap
+  - spawn-fcgi
   - smokeping
   - ttf-dejavu
 

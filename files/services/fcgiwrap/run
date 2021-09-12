@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+/usr/bin/spawn-fcgi -u nginx -g smokeping -n -F 1 -s /var/run/fcgiwrap.socket -f /usr/bin/fcgiwrap

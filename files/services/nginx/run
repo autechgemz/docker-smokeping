@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+if [ ! -d /run/nginx ]; then
+  mkdir -p /run/nginx
+else
+  [ -f /run/nginx/nginx.pid ] && rm -f /run/nginx/nginx.pid
+fi
+
+if [ ! -d /tmp/nginx ]; then
+  mkdir -p /tmp/nginx
+  chown nginx /tmp/nginx
+fi
+
+exec /usr/sbin/nginx -g "daemon off;"

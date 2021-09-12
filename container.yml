@@ -8,12 +8,8 @@
     block:
     - name: generate httpd.conf
       template:
-        src: "apache2/httpd.conf.j2"
-        dest: "/etc/apache2/httpd.conf"
-    - name: generate smokeping.conf
-      copy:
-        src: "apache2/smokeping.conf"
-        dest: "/etc/apache2/conf.d/smokeping.conf"
+        src: "nginx/nginx.conf"
+        dest: "/etc/nginx/nginx.conf"
     - name: generate smokeping config
       template:
         src: "smokeping/config.j2"
@@ -21,7 +17,7 @@
     - name: make smokeping directories
       file:
         path: "/var/lib/smokeping/{{ item }}"
-        owner: apache
+        owner: nginx
         group: smokeping
         state: directory
       with_items:
@@ -30,13 +26,13 @@
     - name: "make symlink to /dev/stdout"
       file:
         src: "/dev/stdout"
-        dest: "/var/log/apache2/error.log"
+        dest: "/var/log/nginx/error.log"
         state: link
         follow: no
     - name: "make symlink to /dev/null"
       file:
         src: "/dev/null"
-        dest: "/var/log/apache2/access.log"
+        dest: "/var/log/nginx/access.log"
         state: link
         follow: no
   - name: setup runit configrations
@@ -52,5 +48,6 @@
       file:
         path: "/services/{{ item }}/run"
       with_items:
-        - "apache"
+        - "nginx"
+        - "fcgiwrap"
         - "smokeping"
