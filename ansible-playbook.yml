@@ -25,7 +25,7 @@
         force: yes
   - name: smokeping configurations
     block:
-    - name: copy httpd.conf
+    - name: generate httpd.conf
       template:
         src: "apache2/httpd.conf.j2"
         dest: "/etc/apache2/httpd.conf"
@@ -33,7 +33,7 @@
       copy:
         src: "apache2/smokeping.conf"
         dest: "/etc/apache2/conf.d/smokeping.conf"
-    - name: copy smokeping config
+    - name: generate smokeping config
       template:
         src: "smokeping/config.j2"
         dest: "/etc/smokeping/config"
