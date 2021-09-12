@@ -26,8 +26,8 @@
   - name: smokeping configurations
     block:
     - name: copy httpd.conf
-      copy:
-        src: "apache2/httpd.conf"
+      template:
+        src: "apache2/httpd.conf.j2"
         dest: "/etc/apache2/httpd.conf"
     - name: generate smokeping.conf
       copy:

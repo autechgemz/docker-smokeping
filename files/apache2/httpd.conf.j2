@@ -32,6 +32,7 @@ User apache
 Group apache
 </IfModule>
 ServerAdmin you@example.com
+ServerName {{ ansible_hostname | default('smokeping') }}
 ServerSignature Off
 <Directory />
     AllowOverride none
