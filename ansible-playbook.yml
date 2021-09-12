@@ -29,7 +29,7 @@
       copy:
         src: "apache2/httpd.conf"
         dest: "/etc/apache2/httpd.conf"
-    - name: copy smokeping.conf
+    - name: generate smokeping.conf
       copy:
         src: "apache2/smokeping.conf"
         dest: "/etc/apache2/conf.d/smokeping.conf"
