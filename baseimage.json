@@ -9,7 +9,7 @@
       "image": "{{user `image_from`}}",
       "pull": true,
       "run_command": ["-dit", "{{.Image}}", "/bin/ash"],
-      "commit": true
+      "export_path": "baseimage.tar"
     }
   ],
   "provisioners":[
@@ -39,9 +39,9 @@
   ],
   "post-processors": [
     {
-      "type": "docker-tag",
+      "type": "docker-import",
       "repository": "autechgemz/smokeping-baseimage",
-      "tags": "latest"
+      "tag": "latest"
     }
   ]
 }

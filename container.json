@@ -10,13 +10,7 @@
       "image": "{{user `image_from`}}",
       "pull": false,
       "run_command": ["-dit", "{{.Image}}", "/bin/ash"],
-      "commit": true,
-      "changes": [
-	"ENV TZ {{user `timezone`}}",
-	"VOLUME /var/lib/smokeping",
-	"EXPOSE {{user `service_port`}}\/tcp",
-	"ENTRYPOINT [ \"runsvdir\", \"-P\", \"\/services\/\" ]"
-      ]
+      "export_path": "container.tar"
     }
   ],
   "provisioners":[
@@ -43,9 +37,15 @@
   ],
   "post-processors": [
     {
-      "type": "docker-tag",
+      "type": "docker-import",
       "repository": "autechgemz/smokeping",
-      "tags": "latest"
+      "tag": "latest",
+      "changes": [
+        "ENV TZ {{user `timezone`}}",
+        "VOLUME /var/lib/smokeping",
+        "EXPOSE {{user `service_port`}}\/tcp",
+        "ENTRYPOINT [ \"runsvdir\", \"-P\", \"\/services\/\" ]"
+      ]
     }
   ]
 }
