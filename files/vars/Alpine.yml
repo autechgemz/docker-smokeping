@@ -2,7 +2,6 @@
 timezone: 'Asia/Tokyo'
 
 package_names:
-  - bash
   - runit
   - fping
   - tzdata
