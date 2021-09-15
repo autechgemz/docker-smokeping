@@ -8,11 +8,11 @@
     block:
     - name: generate httpd.conf
       template:
-        src: "nginx/nginx.conf"
+        src: "etc/nginx/nginx.conf"
         dest: "/etc/nginx/nginx.conf"
     - name: generate smokeping config
       template:
-        src: "smokeping/config.j2"
+        src: "etc/smokeping/config.j2"
         dest: "/etc/smokeping/config"
     - name: make smokeping directories
       file:
