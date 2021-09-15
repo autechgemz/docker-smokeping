@@ -8,15 +8,15 @@
     block:
     - name: generate httpd.conf
       template:
-        src: "apache2/httpd.conf.j2"
+        src: "etc/apache2/httpd.conf.j2"
         dest: "/etc/apache2/httpd.conf"
     - name: generate smokeping.conf
       copy:
-        src: "apache2/smokeping.conf"
+        src: "etc/apache2/smokeping.conf"
         dest: "/etc/apache2/conf.d/smokeping.conf"
     - name: generate smokeping config
       template:
-        src: "smokeping/config.j2"
+        src: "etc/smokeping/config.j2"
         dest: "/etc/smokeping/config"
     - name: make smokeping directories
       file:
