@@ -93,16 +93,6 @@ unison_tolerance = 2
 
 binary = /usr/sbin/fping
 
-*** Slaves ***
-secrets=/etc/smokeping/smokeping_secrets
-+boomer
-display_name=boomer
-color=0000ff
-
-+slave2
-display_name=another
-color=00ff00
-
 *** Targets ***
 
 probe = FPing
