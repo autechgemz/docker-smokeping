@@ -11,8 +11,14 @@ RUN apk upgrade --update --available \
     apache2 \
     smokeping \
     ttf-dejavu \
+    curl \
+    bind-tools \
  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
  && rm -rf /var/cache/apk/*
+
+ADD http://www.vdberg.org/~richard/tcpping /usr/local/bin/tcpping
+
+RUN chmod +x /usr/local/tcpping
 
 RUN echo $'PS1="[\u@\h \W]# "\n\
 PATH=$PATH:$HOME/bin\n\
