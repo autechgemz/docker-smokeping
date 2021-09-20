@@ -24,7 +24,7 @@ comment = loss 3 times  in a row
 
 *** Database ***
 
-step     = 30
+step     = 300
 pings    = 20
 
 # consfn mrhb steps total
@@ -72,13 +72,13 @@ format = Median RTT %f seconds
 
 + overview 
 
-width = 800
+width = 600
 height = 50
 range = 10h
 
 + detail
 
-width = 800
+width = 600
 height = 200
 unison_tolerance = 2
 
@@ -92,6 +92,7 @@ unison_tolerance = 2
 + FPing
 
 binary = /usr/sbin/fping
+step = 60
 packetsize = 1000
 
 + DNS
@@ -103,6 +104,7 @@ step = 180
 + Curl
 
 binary = /usr/bin/curl
+extraargs = --silent
 step = 60
 urlformat = http://%host%/
 
@@ -122,20 +124,166 @@ probe = FPing
 
 menu = Top
 title = Network Latency Grapher
-remark = Welcome to the SmokePing website of xxx Company. \
-         Here you will learn all about the latency of our network.
+remark = Welcome to the SmokePing website.
 
-+ Local
++ Targets
 menu= Targets
 
-++ docker-machine 
+++ Network
 
-menu  = localhost
+probe = FPing
+menu = Network latency
+title = Network latency (DNS)
+
++++ localhost
+menu = localhost
 title = localhost
-host = 127.0.0.1 
+host = 127.0.0.1
 
-++ gateway
-
-menu = gateway
-title = gateway
++++ Gateway
+menu = Gateway
+title = Gateway
 host = 192.168.1.1
+
++++ IntelNUC
+menu = Intel NUC
+title = Intel NUC
+host = 192.168.1.251
+
+++ PublicDNS
+
+probe = DNS
+menu = DNS latency
+title = Service latency (DNS)
+
++++ GoogleDNS1
+menu = GoogleDNS1
+title = Google Public DNS 1
+host = 8.8.8.8
+lookup = www.google.com
+server = 8.8.8.8
+
++++ GoogleDNS2
+menu = GoogleDNS2
+title = Google Public DNS 2
+host = 8.8.4.4
+lookup = www.google.com
+server = 8.8.4.4
+
++++ Cloudflare1
+menu = Cloudflare1
+title = Cloudflare Public DNS 1
+host = 1.1.1.1
+lookup = www.cloudflare.com
+server = 1.1.1.1
+
++++ Cloudflare2
+menu = Cloudflare2
+title = Cloudflare Public DNS 2
+host = 1.0.0.1
+lookup = www.cloudflare.com
+server = 1.0.0.1
+
++++ Quad9
+menu = Quad9
+title = Quad9 Public DNS
+host = 9.9.9.9
+lookup = www.quad9.net
+server = 9.9.9.9
+
++++ OpenDNS1
+menu = OpenDNS1
+title = OpenDNS Public DNS 1
+host = 208.67.222.222
+lookup = www.opendns.com
+server = 208.67.222.222
+
++++ OpenDNS2
+menu = OpenDNS2
+title = OpenDNS Public DNS 2
+host = 208.67.220.220
+lookup = www.opendns.com
+server = 208.67.220.220
+
++++ VerisignPublicDNS1
+menu = VerisignPublicDNS1
+title = Verisign Public DNS 1
+host = 64.6.64.6
+lookup = www.verisign.com
+server = 64.6.64.6
+
++++ VerisignPublicDNS2
+menu = VerisignPublicDNS2
+title = Verisign Public DNS 2
+host = 64.6.65.6
+lookup = www.verisign.com
+server = 64.6.65.6
+
+++ PublicWeb
+
+probe = Curl
+menu = HTTP latency
+title = Service latency (HTTP)
+
++++ YahooJP
+title = www.yahoo.co.jp
+host = www.yahoo.co.jp
+
++++ YahooCOM
+title = www.yahoo.com
+host = www.yahoo.com
+
++++ GoogleJP
+title = www.google.co.jp
+host = www.google.co.jp
+
++++ GoogleCOM
+title = www.google.com
+host = www.google.com
+
++++ UbuntuCOM
+title = ubuntu.com
+host = ubuntu.com
+
++++ UbuntuJP
+title = jp.ubuntu.com
+host = jp.ubuntu.com
+
++++ Github
+title = github.com
+host = github.com
+
++++ iCloud
+title = iclouid.com
+host = iclouid.com
+
+++ PublicCloud
+
+probe = Curl
+menu = Public Cloud
+title = Service latency (HTTP)
+
++++ AWS
+menu = AWS
+title = status.aws.amazon.com
+host = status.aws.amazon.com
+
++++ GCP
+menu = GCP
+title = status.cloud.google.com
+host = status.cloud.google.com
+
++++ Azure
+menu = Azure
+title = status.azure.com
+host = status.azure.com
+
++++ OCI
+menu = OCI
+title = ocistatus.oraclecloud.com
+host = ocistatus.oraclecloud.com
+
++++ NiftyCloud
+menu = NiftyCloud
+title = pfs.nifcloud.com
+host = pfs.nifcloud.com
