@@ -8,5 +8,7 @@ package_names:
   - apache2
   - smokeping
   - ttf-dejavu
+  - curl
+  - bind-tools
 
 package_cleandir: '/var/cache/apk'
