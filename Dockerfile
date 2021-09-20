@@ -18,7 +18,7 @@ RUN apk upgrade --update --available \
 
 ADD http://www.vdberg.org/~richard/tcpping /usr/local/bin/tcpping
 
-RUN chmod +x /usr/local/tcpping
+RUN chmod +x /usr/local/bin/tcpping
 
 RUN echo $'PS1="[\u@\h \W]# "\n\
 PATH=$PATH:$HOME/bin\n\
