@@ -1,19 +1,28 @@
 {
   "variables": {
     "timezone": "Asia/Tokyo",
-    "image_from": "autechgemz/smokeping-baseimage",
+    "image_from": "alpine:latest",
     "service_port": "80"
   },
   "builders":[
     {
       "type": "docker",
       "image": "{{user `image_from`}}",
-      "pull": false,
+      "pull": true,
       "run_command": ["-dit", "{{.Image}}", "/bin/ash"],
       "export_path": "container.tar"
     }
   ],
   "provisioners":[
+    {
+      "type": "shell",
+      "inline": [
+        "apk update",
+	"apk upgrade --update --available",
+	"apk add --no-cache ansible python3",
+	"mkdir -p /tmp/ansible-local"
+      ]
+    },
     {
       "type": "file",
       "source": "files/",

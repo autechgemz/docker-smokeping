@@ -4,6 +4,25 @@
   vars_files:
     - "vars/{{ ansible_distribution }}.yml"
   tasks:
+  - name: general settings
+    block:
+    - name: install packages
+      package:
+        name: "{{ package_names }}"
+        state: present
+    - name: clean directories
+      file:
+        path: "{{ item }}"
+        force: yes
+        state: absent
+      with_items: "{{ package_cleandir }}"
+    - debug: var=timezone
+    - name: change timezone setting
+      file:
+        src: "/usr/share/zoneinfo/{{ timezone }}"
+        dest: /etc/localtime
+        state: link
+        force: yes
   - name: smokeping configurations
     block:
     - name: generate httpd.conf
@@ -51,3 +70,8 @@
         - "nginx"
         - "fcgiwrap"
         - "smokeping"
+  - name: install probe tools
+    get_url:
+      url: http://www.vdberg.org/~richard/tcpping
+      dest: /usr/local/bin/tcpping
+      mode: '0755'
