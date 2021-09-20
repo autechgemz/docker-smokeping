@@ -61,7 +61,7 @@ COPY config /etc/smokeping/config
 RUN /bin/bash -c "mkdir -p /var/lib/smokeping/{cache,data}" \
  && /bin/bash -c "chown apache.smokeping /var/lib/smokeping/{cache,data}" \
  && /bin/bash -c "rm -rf /etc/smokeping/examples" \
- && /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/access.log" \
+ && /bin/bash -c "ln -snf /dev/null /var/log/apache2/access.log" \
  && /bin/bash -c "ln -snf /dev/stdout /var/log/apache2/error.log"
 
 COPY services /services
