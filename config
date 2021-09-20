@@ -92,6 +92,29 @@ unison_tolerance = 2
 + FPing
 
 binary = /usr/sbin/fping
+packetsize = 1000
+
++ DNS
+
+binary = /usr/bin/dig
+pings = 5
+step = 180
+
++ Curl
+
+binary = /usr/bin/curl
+step = 60
+urlformat = http://%host%/
+
++ TCPPing
+
+binary = /usr/local/bin/tcpping
+forks = 5
+offset = 50%
+step = 300
+timeout = 15
+pings = 5
+port = 80
 
 *** Targets ***
 
@@ -102,7 +125,7 @@ title = Network Latency Grapher
 remark = Welcome to the SmokePing website of xxx Company. \
          Here you will learn all about the latency of our network.
 
-+ Test
++ Local
 menu= Targets
 
 ++ docker-machine 
